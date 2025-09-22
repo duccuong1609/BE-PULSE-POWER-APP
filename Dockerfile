@@ -24,7 +24,7 @@ COPY --from=builder /app/package*.json ./
 RUN npm install --only=production
 
 # expose port
-EXPOSE 3000
+EXPOSE 8080
 
 # start app
 CMD ["node", "dist/main"]
