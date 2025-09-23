@@ -4,7 +4,7 @@ services:
   pulse-power-app:
     image: duccuong1609/pulse-power-app:latest
     ports:
-      - "3000:3000"
+      - "8080:8080"
     env_file:
       - .env.production
     restart: always
