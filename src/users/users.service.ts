@@ -4,12 +4,15 @@ import { Repository } from 'typeorm'
 import { User } from './entities/user.entity'
 import { CreateUserDto } from './dto/create-user.dto'
 import { UpdateUserDto } from './dto/update-user.dto'
+import { JwtService } from '@nestjs/jwt'
+import { BaseUserInfoDto } from './dto/base-user-info.dto'
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User)
     private usersRepository: Repository<User>,
+    private readonly jwtService: JwtService
   ) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
@@ -48,4 +51,17 @@ export class UsersService {
       throw new NotFoundException(`User with id ${id} not found`)
     }
   }
+
+  async getCurrentUser(accessToken: string): Promise<BaseUserInfoDto> {
+    const payload = this.jwtService.decode(accessToken)
+    const user = await this.usersRepository.findOne({ where: { id: payload.sub } })
+    
+    if (!user) {
+      throw new NotFoundException(`User with id ${payload.sub} not found`)
+    }
+    
+    const userResponse: BaseUserInfoDto = { id: user.id, username: user.username, email: user.email, role: user.role, createdAt: user.createdAt, updatedAt: user.updatedAt }
+    return userResponse
+  }
+
 }

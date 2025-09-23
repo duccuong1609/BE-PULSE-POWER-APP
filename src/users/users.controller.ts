@@ -4,11 +4,12 @@ import {
   Post,
   Body,
   Param,
-  Patch,
   Delete,
   ParseIntPipe,
   UseGuards,
   Put,
+  Headers,
+  UnauthorizedException,
 } from '@nestjs/common'
 import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger'
 import { UsersService } from './users.service'
@@ -16,6 +17,7 @@ import { CreateUserDto } from './dto/create-user.dto'
 import { UpdateUserDto } from './dto/update-user.dto'
 import { User } from './entities/user.entity'
 import { JwtAuthGuard } from 'src/utils/jwt-auth.guard'
+import { BaseUserInfoDto } from './dto/base-user-info.dto'
 
 @ApiTags('User Services')
 @Controller('users')
@@ -23,6 +25,24 @@ import { JwtAuthGuard } from 'src/utils/jwt-auth.guard'
 @ApiBearerAuth('JWT-auth')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
+
+  @Get('me')
+  @ApiOperation({ summary: 'Lấy thông tin user hiện tại' })
+  @ApiResponse({ status: 200, type: BaseUserInfoDto })
+  async getCurrentUser(
+    @Headers('authorization') authHeader: string,
+  ): Promise<BaseUserInfoDto> {
+    if (!authHeader) {
+      throw new UnauthorizedException('Missing Authorization header');
+    }
+
+    const [scheme, token] = authHeader.split(' ');
+    if (scheme !== 'Bearer' || !token) {
+      throw new UnauthorizedException('Invalid Authorization header format');
+    }
+
+    return this.usersService.getCurrentUser(token);
+  }
 
   @Post()
   @ApiOperation({ summary: 'Tạo user mới' })
@@ -63,4 +83,6 @@ export class UsersController {
   remove(@Param('id', ParseIntPipe) id: number): Promise<void> {
     return this.usersService.remove(id)
   }
+
+
 }
