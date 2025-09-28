@@ -19,6 +19,7 @@ WORKDIR /app
 # copy built files & package.json
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/package*.json ./
+COPY .env.production .env.production
 
 # install production deps only
 RUN npm install --only=production
