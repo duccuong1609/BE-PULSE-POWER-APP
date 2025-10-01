@@ -12,7 +12,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
-import { JwtAuthGuard } from 'src/utils/jwt-auth.guard.js';
+import { JwtAuthGuard } from '../utils/jwt-auth.guard.js';
 import { UsersService } from './users.service.js';
 import { BaseUserInfoDto } from './dto/base-user-info.dto.js';
 import { CreateUserDto } from './dto/create-user.dto.js';

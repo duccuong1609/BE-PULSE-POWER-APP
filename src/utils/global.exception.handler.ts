@@ -1,6 +1,6 @@
 import { ExceptionFilter, Catch, ArgumentsHost, HttpException, HttpStatus } from '@nestjs/common';
 import { Request, Response } from 'express';
-import ErrorResponse from 'src/dto/ErrorResponse.js';
+import ErrorResponse from '../dto/ErrorResponse.js';
 
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {

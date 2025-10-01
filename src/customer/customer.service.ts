@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { RecommendProductInfo } from './dto/recommend-response-dto.js';
-import MODEL_ROOT from 'src/utils/model.root.config.js';
+import MODEL_ROOT from '../utils/model.root.config.js';
 
 @Injectable()
 export class CustomerService {

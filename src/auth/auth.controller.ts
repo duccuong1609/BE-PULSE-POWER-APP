@@ -4,7 +4,7 @@ import { AuthService } from './auth.service.js';
 import { LoginDto } from './dto/login-dto.js';
 import { LoginResponseDto } from './dto/login-response-dto.js';
 import { RegisterDto } from './dto/register-dto.js';
-import { JwtAuthGuard } from 'src/utils/jwt-auth.guard.js';
+import { JwtAuthGuard } from '../utils/jwt-auth.guard.js';
 import { RefreshResponseDto } from './dto/refresh-response-dto.js';
 
 @ApiTags('Authentication Services')
