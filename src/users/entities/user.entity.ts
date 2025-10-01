@@ -1,37 +1,43 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm'
-import { ApiProperty } from '@nestjs/swagger'
-import { Auth } from 'src/auth/entities/auth.entity'
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  OneToMany,
+} from 'typeorm';
+import { ApiProperty } from '@nestjs/swagger';
+import { Auth } from 'src/auth/entities/auth.entity.js';
 
 @Entity('users')
 export class User {
   @PrimaryGeneratedColumn()
   @ApiProperty()
-  id: number
+  id: number;
 
   @Column({ unique: true })
   @ApiProperty()
-  username: string
+  username: string;
 
   @Column()
-  password: string
+  password: string;
 
   @Column({ unique: true })
   @ApiProperty()
-  email: string
+  email: string;
 
   @Column({ default: 'user' })
   @ApiProperty({ example: 'user', description: 'Role of the user' })
-  role: string
+  role: string;
 
   @CreateDateColumn({ name: 'created_at' })
   @ApiProperty()
-  createdAt: Date
+  createdAt: Date;
 
   @UpdateDateColumn({ name: 'updated_at' })
   @ApiProperty()
-  updatedAt: Date
+  updatedAt: Date;
 
-  @OneToMany(() => Auth, auth => auth.user)
-  auth: Auth[]
-
+  @OneToMany(() => Auth, (auth) => auth.user)
+  auth: Auth[];
 }

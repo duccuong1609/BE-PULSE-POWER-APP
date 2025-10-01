@@ -1,11 +1,11 @@
-import { Controller, Post, Body, UseGuards, Param } from '@nestjs/common'
-import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiBearerAuth } from '@nestjs/swagger'
-import { AuthService } from './auth.service'
-import { LoginDto } from './dto/login-dto'
-import { RegisterDto } from './dto/register-dto'
-import { LoginResponseDto } from './dto/login-response-dto'
-import { JwtAuthGuard } from 'src/utils/jwt-auth.guard'
-import { RefreshResponseDto } from './dto/refresh-response-dto'
+import { Controller, Post, Body, UseGuards, Param } from '@nestjs/common';
+import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiBearerAuth } from '@nestjs/swagger';
+import { AuthService } from './auth.service.js';
+import { LoginDto } from './dto/login-dto.js';
+import { LoginResponseDto } from './dto/login-response-dto.js';
+import { RegisterDto } from './dto/register-dto.js';
+import { JwtAuthGuard } from 'src/utils/jwt-auth.guard.js';
+import { RefreshResponseDto } from './dto/refresh-response-dto.js';
 
 @ApiTags('Authentication Services')
 @Controller('auth')
@@ -18,7 +18,7 @@ export class AuthController {
   @ApiBody({ type: LoginDto })
   @ApiResponse({ status: 200, type: LoginResponseDto })
   async login(@Body() loginDto: LoginDto) {
-    return this.authService.login(loginDto)
+    return this.authService.login(loginDto);
   }
 
   @Post('register')
@@ -26,14 +26,14 @@ export class AuthController {
   @ApiBody({ type: RegisterDto })
   @ApiResponse({ status: 201, type: LoginResponseDto })
   async register(@Body() registerDto: RegisterDto) {
-    return this.authService.register(registerDto)
+    return this.authService.register(registerDto);
   }
 
   @Post('logout')
   @ApiOperation({ summary: 'Logout user' })
   @UseGuards(JwtAuthGuard)
   async logout(@Param('userId') userId: number) {
-    return this.authService.logout(userId)
+    return this.authService.logout(userId);
   }
 
   @Post('refresh')
@@ -41,7 +41,6 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)
   @ApiResponse({ status: 200, type: RefreshResponseDto })
   async refresh(@Param('refreshToken') refreshToken: string) {
-    return this.authService.refresh(refreshToken)
+    return this.authService.refresh(refreshToken);
   }
-
 }

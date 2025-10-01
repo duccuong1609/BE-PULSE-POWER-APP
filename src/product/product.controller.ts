@@ -1,0 +1,44 @@
+import { Controller, Get, Post, Body, Param, Delete, Put } from '@nestjs/common';
+import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ProductService } from './product.service.js';
+import { ProductResponse } from './dto/product-response.js';
+import { CreateProductDto } from './dto/create-product.dto.js';
+import { UpdateProductDto } from './dto/update-product.dto.js';
+
+@Controller('product')
+@ApiBearerAuth('JWT-auth')
+@ApiTags('Product Service')
+export class ProductController {
+  constructor(private readonly productService: ProductService) {}
+
+  @Post()
+  @ApiOperation({ summary: 'Tạo product mới' })
+  @ApiResponse({ status: 201, type: ProductResponse })
+  async create(@Body() createProductDto: CreateProductDto) {
+    return await this.productService.create(createProductDto);
+  }
+
+  @Get()
+  @ApiOperation({ summary: 'Lấy ds product' })
+  @ApiResponse({ status: 201, type: ProductResponse, isArray: true })
+  findAll() {
+    return this.productService.findAll();
+  }
+
+  @Get(':id')
+  @ApiOperation({ summary: 'Lấy product' })
+  @ApiResponse({ status: 201, type: ProductResponse })
+  findOne(@Param('id') id: string) {
+    return this.productService.findOne(+id);
+  }
+
+  @Put(':id')
+  update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
+    return this.productService.update(+id, updateProductDto);
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.productService.remove(+id);
+  }
+}

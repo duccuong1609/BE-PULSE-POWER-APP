@@ -1,6 +1,6 @@
 import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { AppService } from './app.service.js';
 
 @Controller()
 @ApiTags('Root')
@@ -12,6 +12,4 @@ export class AppController {
   getConnection(): Object {
     return this.appService.getConnection();
   }
-
-  
 }
