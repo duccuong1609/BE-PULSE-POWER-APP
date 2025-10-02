@@ -31,14 +31,12 @@ export class AuthController {
 
   @Post('logout')
   @ApiOperation({ summary: 'Logout user' })
-  @UseGuards(JwtAuthGuard)
   async logout(@Param('userId') userId: number) {
     return this.authService.logout(userId);
   }
 
   @Post('refresh')
   @ApiOperation({ summary: 'Refresh token' })
-  @UseGuards(JwtAuthGuard)
   @ApiResponse({ status: 200, type: RefreshResponseDto })
   async refresh(@Param('refreshToken') refreshToken: string) {
     return this.authService.refresh(refreshToken);
