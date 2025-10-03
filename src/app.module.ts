@@ -7,7 +7,6 @@ import { CustomerModule } from './customer/customer.module.js';
 import { ProductModule } from './product/product.module.js';
 import { AppController } from './app.controller.js';
 import { AppService } from './app.service.js';
-import { CustomerService } from './customer/customer.service.js';
 
 @Module({
   imports: [
@@ -32,6 +31,6 @@ import { CustomerService } from './customer/customer.service.js';
     ProductModule,
   ],
   controllers: [AppController],
-  providers: [AppService, CustomerService],
+  providers: [AppService],
 })
 export class AppModule {}

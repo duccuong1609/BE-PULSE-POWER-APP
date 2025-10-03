@@ -1,28 +1,27 @@
-import { ApiProperty } from '@nestjs/swagger'
-import { IsEmail, IsNotEmpty, IsOptional, IsString } from 'class-validator'
+import { ApiProperty } from '@nestjs/swagger';
+import { IsEmail, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class BaseUserInfoDto {
-
   @ApiProperty({ example: 1 })
-  id: number
+  id: number;
 
   @ApiProperty({ example: 'user@example.com' })
   @IsEmail()
-  email: string
+  email: string;
 
   @ApiProperty({ example: 'johndoe' })
   @IsString()
   @IsNotEmpty()
-  username: string
+  username: string;
 
   @ApiProperty({ example: 'user', enum: ['user', 'admin'] })
   @IsOptional()
   @IsString()
-  role: string
+  role: string;
 
   @ApiProperty({ example: '2022-01-01T00:00:00.000Z' })
-  createdAt: Date
+  createdAt: Date;
 
   @ApiProperty({ example: '2022-01-01T00:00:00.000Z' })
-  updatedAt: Date
+  updatedAt: Date;
 }

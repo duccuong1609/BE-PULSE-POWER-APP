@@ -1,5 +1,5 @@
 import { Controller, Get, Post, Body, Param, Delete, Put, UseGuards } from '@nestjs/common';
-import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ProductService } from './product.service.js';
 import { ProductResponse } from './dto/product-response.js';
 import { CreateProductDto } from './dto/create-product.dto.js';
@@ -9,13 +9,14 @@ import { JwtAuthGuard } from '../utils/jwt-auth.guard.js';
 @Controller('product')
 @ApiBearerAuth('JWT-auth')
 @UseGuards(JwtAuthGuard)
-@ApiTags('Product Service')
+@ApiTags('Product Services')
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
   @Post()
   @ApiOperation({ summary: 'Tạo product mới' })
   @ApiResponse({ status: 201, type: ProductResponse })
+  @ApiBody({ type: CreateProductDto })
   async create(@Body() createProductDto: CreateProductDto) {
     return await this.productService.create(createProductDto);
   }
