@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { RecommendProductInfo } from './dto/recommend-response-dto.js';
 import MODEL_ROOT from '../utils/model.root.config.js';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -24,7 +24,12 @@ export class CustomerService {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ user_id: customerId, top_k: top_k }),
     });
+
     const data = await response.json();
+
+    if (response.status === 404) throw new NotFoundException(JSON.stringify(data));
+    if (!response.ok) throw new Error(JSON.stringify(data));
+
     return data as RecommendProductInfo;
   }
 
