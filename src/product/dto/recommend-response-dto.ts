@@ -2,9 +2,9 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsString } from 'class-validator';
 
 export class RecommendProductInfo {
-  @ApiProperty({ example: 'KH000002' })
+  @ApiProperty({ example: 'SP000001' })
   @IsString()
-  user_id: string;
+  product_id: string;
   recommendations: RecommendationProduct[];
 }
 

@@ -5,6 +5,8 @@ import { ProductResponse } from './dto/product-response.js';
 import { CreateProductDto } from './dto/create-product.dto.js';
 import { UpdateProductDto } from './dto/update-product.dto.js';
 import { JwtAuthGuard } from '../utils/jwt-auth.guard.js';
+import { RecommendProductDto } from './dto/recommend-dto.js';
+import { RecommendProductInfo } from './dto/recommend-response-dto.js';
 
 @Controller('product')
 @ApiBearerAuth('JWT-auth')
@@ -43,5 +45,17 @@ export class ProductController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.productService.remove(+id);
+  }
+
+  @Post('recommend_neuMF')
+  @ApiBody({ type: RecommendProductDto })
+  @ApiOperation({ summary: 'Get recommend product for product' })
+  async getRecommendProductForCustomerNeuMF(
+    @Body() recommendDto: RecommendProductDto,
+  ): Promise<RecommendProductInfo> {
+    return await this.productService.recommendProductForProductNeuMF(
+      recommendDto.product_id,
+      recommendDto.top_k,
+    );
   }
 }

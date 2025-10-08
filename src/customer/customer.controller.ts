@@ -26,6 +26,18 @@ export class CustomerController {
     );
   }
 
+  @Post('recommend_neuMF')
+  @ApiBody({ type: RecommendProductDto })
+  @ApiOperation({ summary: 'Get recommend product for customer' })
+  async getRecommendProductForCustomerNeuMF(
+    @Body() recommendDto: RecommendProductDto,
+  ): Promise<RecommendProductInfo> {
+    return await this.customerService.recommendProductForCustomerNeuMF(
+      recommendDto.user_id,
+      recommendDto.top_k,
+    );
+  }
+
   @Get()
   @ApiOperation({ summary: 'Get all customer' })
   async getAllCustomer() {

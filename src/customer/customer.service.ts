@@ -33,6 +33,26 @@ export class CustomerService {
     return data as RecommendProductInfo;
   }
 
+  async recommendProductForCustomerNeuMF(
+    customerId: string,
+    top_k: number,
+  ): Promise<RecommendProductInfo> {
+    const url = `${process.env.MODEL_URL}${MODEL_ROOT.CUSTOMER_SERVICE.RECOMMEND_PRODUCT_FOR_CUSTOMER_NEUMF}`;
+
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ user_id: customerId, top_k: top_k }),
+    });
+
+    const data = await response.json();
+
+    if (response.status === 404) throw new NotFoundException(JSON.stringify(data));
+    if (!response.ok) throw new Error(JSON.stringify(data));
+
+    return data as RecommendProductInfo;
+  }
+
   async getAllCustomer() {
     return await this.customerRepository.find();
   }
