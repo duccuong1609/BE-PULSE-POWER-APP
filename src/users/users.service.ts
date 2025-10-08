@@ -6,6 +6,7 @@ import { User } from './entities/user.entity.js';
 import { CreateUserDto } from './dto/create-user.dto.js';
 import { UpdateUserDto } from './dto/update-user.dto.js';
 import { BaseUserInfoDto } from './dto/base-user-info.dto.js';
+import { SavedHistoryInfo } from './dto/saved-history-info.dto.js';
 
 @Injectable()
 export class UsersService {
@@ -69,5 +70,14 @@ export class UsersService {
       updatedAt: user.updatedAt,
     };
     return userResponse;
+  }
+
+  async updateUserSavedHistory(id: number, savedHistory: SavedHistoryInfo[]) {
+    const user = await this.usersRepository.findOne({ where: { id } });
+    if (!user) {
+      throw new NotFoundException(`User with id ${id} not found`);
+    }
+    user.savedHistory = savedHistory;
+    return this.usersRepository.save(user);
   }
 }

@@ -18,6 +18,7 @@ import { BaseUserInfoDto } from './dto/base-user-info.dto.js';
 import { CreateUserDto } from './dto/create-user.dto.js';
 import { User } from './entities/user.entity.js';
 import { UpdateUserDto } from './dto/update-user.dto.js';
+import { SavedHistoryInfo, UpdateSavedHistoryDto } from './dto/saved-history-info.dto.js';
 
 @ApiTags('User Services')
 @Controller('users')
@@ -80,5 +81,15 @@ export class UsersController {
   @ApiResponse({ status: 404, description: 'User không tồn tại' })
   remove(@Param('id', ParseIntPipe) id: number): Promise<void> {
     return this.usersService.remove(id);
+  }
+
+  @Put(':id/saved-history')
+  @ApiOperation({ summary: 'Cập nhật lịch sử dụng cơ sở học' })
+  @ApiResponse({ status: 200, type: User })
+  updateUserSavedHistory(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() history: UpdateSavedHistoryDto,
+  ): Promise<User> {
+    return this.usersService.updateUserSavedHistory(id, history.savedHistory);
   }
 }

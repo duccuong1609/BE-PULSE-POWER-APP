@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { Auth } from '../../auth/entities/auth.entity.js';
+import { SavedHistoryInfo } from '../dto/saved-history-info.dto.js';
 
 @Entity('users')
 export class User {
@@ -40,4 +41,7 @@ export class User {
 
   @OneToMany(() => Auth, (auth) => auth.user)
   auth: Auth[];
+
+  @Column({ type: 'json', nullable: true })
+  savedHistory: SavedHistoryInfo[];
 }

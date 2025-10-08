@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { RecommendProductDto } from './dto/recommend-dto.js';
+import { RecommendCustomerDto } from './dto/recommend-dto.js';
 import { CustomerService } from './customer.service.js';
 import { RecommendProductInfo } from './dto/recommend-response-dto.js';
 import { CustomerDTO } from './dto/customer-dto.js';
@@ -15,10 +15,10 @@ export class CustomerController {
   constructor(private readonly customerService: CustomerService) {}
 
   @Post('recommend')
-  @ApiBody({ type: RecommendProductDto })
+  @ApiBody({ type: RecommendCustomerDto })
   @ApiOperation({ summary: 'Get recommend product for customer' })
   async getRecommendProductForCustomer(
-    @Body() recommendDto: RecommendProductDto,
+    @Body() recommendDto: RecommendCustomerDto,
   ): Promise<RecommendProductInfo> {
     return await this.customerService.recommendProductForCustomer(
       recommendDto.user_id,
@@ -27,10 +27,10 @@ export class CustomerController {
   }
 
   @Post('recommend_neuMF')
-  @ApiBody({ type: RecommendProductDto })
+  @ApiBody({ type: RecommendCustomerDto })
   @ApiOperation({ summary: 'Get recommend product for customer' })
   async getRecommendProductForCustomerNeuMF(
-    @Body() recommendDto: RecommendProductDto,
+    @Body() recommendDto: RecommendCustomerDto,
   ): Promise<RecommendProductInfo> {
     return await this.customerService.recommendProductForCustomerNeuMF(
       recommendDto.user_id,

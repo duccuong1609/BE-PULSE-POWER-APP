@@ -1,6 +1,7 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiExtraModels, ApiProperty } from '@nestjs/swagger';
 import { IsNumber, IsString } from 'class-validator';
 
+@ApiExtraModels()
 export class RecommendProductDto {
   @ApiProperty({ example: 'SP000001' })
   @IsString()
