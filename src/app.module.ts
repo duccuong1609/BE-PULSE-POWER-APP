@@ -7,6 +7,7 @@ import { CustomerModule } from './customer/customer.module.js';
 import { ProductModule } from './product/product.module.js';
 import { AppController } from './app.controller.js';
 import { AppService } from './app.service.js';
+import { CartModule } from './cart/cart.module.js';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { AppService } from './app.service.js';
     AuthModule,
     CustomerModule,
     ProductModule,
+    CartModule,
   ],
   controllers: [AppController],
   providers: [AppService],
